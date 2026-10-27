@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلال المخير - خبير الـ PC والتقنية</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #090d16;
+            color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 650px;
+            height: 85vh;
+            background: #111827;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 255, 128, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #1f2937;
+        }
+        .chat-header {
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .message {
+            padding: 14px 18px;
+            border-radius: 12px;
+            max-width: 85%;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        .message.bot {
+            background: #1f2937;
+            align-self: flex-start;
+            color: #f3f4f6;
+            border-right: 3px solid #10b981;
+        }
+        .message.user {
+            background: #2563eb;
+            align-self: flex-end;
+            color: white;
+        }
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            background: #0b0f19;
+            border-top: 1px solid #1f2937;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #374151;
+            background: #111827;
+            color: white;
+            border-radius: 10px;
+            outline: none;
+            font-size: 1rem;
+        }
+        .chat-input-area input:focus {
+            border-color: #10b981;
+        }
+        .chat-input-area button {
+            background: #10b981;
+            color: #090d16;
+            border: none;
+            padding: 0 24px;
+            margin-right: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .chat-input-area button:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            🖥️ طلال المخير - خبير الـ PC والهاردوير ⚡
+        </div>
+        <div class="chat-messages" id="messages">
+            <div class="message bot">يا هلا بك يا كابتن! معك <strong>طلال المخير (إصدار المحترفين للبي سي)</strong>. جاهز أفيدك بأقوى التجميعات، مقارنات كروت الشاشة، كسر السرعة، وحل أي مشكلة في فريمات لعبتك. وش القطعة اللي نحتار فيها اليوم؟ 🚀</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="userInput" placeholder="اسأل عن تجميعة، كرت شاشة، أو مشكلة في جهازك..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">إرسال</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const messages = document.getElementById('messages');
+            const text = input.value.trim();
+
+            if (text === '') return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.textContent = text;
+            messages.appendChild(userMsg);
+
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'message bot';
+                botMsg.textContent = getPcExpertResponse(text);
+                messages.appendChild(botMsg);
+                messages.scrollTop = messages.scrollHeight;
+            }, 600);
+        }
+
+        function getPcExpertResponse(query) {
+            const q = query.toLowerCase();
+            if (q.includes('تجميعة') || q.includes('pc') || q.includes('ميزانية')) {
+                return "من عيوني! تبي تجميعة لـ 1080p ولا 4K ناري؟ حدد ميزانيتك بالريال ونظبط لك كرت شاشة ومعالج يطيرون الألعاب بدون دروب فريمات.";
+            } else if (q.includes('كرت') || q.includes('rtx') || q.includes('rx')) {
+                return "اختيار كرت الشاشة يعتمد على شاشتك وHz حقها. تبي أداء صافي مع تتبع الأشعة ولا همك الفريمات العالية في العاب الأونلاين؟";
+            } else if (q.includes('حرارة') || q.includes('مروحة') || q.includes('تبريد')) {
+                return "مشاكل الحرارة غالباً بسبب المعجون الحراري أو تدفق الهواء (Airflow) بالكيس. تأكد من مراوح الشفط والادخال، أو فكر بمبرد مائي AIO محترم.";
+            } else {
+                const replies = [
+                    "فهمت عليك! هذه غالباً مشكلة تعريفات (Drivers) أو إعدادات BIOS، خلنا نشيك على الـ XMP للرامات.",
+                    "يا سلام! نقطة تقنية مهمة، وعشان ناخذ أداء 100/100 لازم نضبط الباور سبلاي (PSU) يكون بكفاءة عالية.",
+                    "تبي الصراحة؟ الهاردوير يبغاله روقان، وعطني تفاصيل القطع اللي عندك عشان أعطيك العلم الوكاد.",
+                    "أبشر بالسعد، من ناحيه الفريمات والاستجابة، هذي شغلتنا ولا تشيل هم!"
+                ];
+                return replies[Math.floor(Math.random() * replies.length)];
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
